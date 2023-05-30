@@ -1,0 +1,27 @@
+.login-main-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: black;
+}
+
+.login-form-main-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 45%;
+    width: 25vw;
+    border: .5px solid aquamarine;
+    color: aquamarine;
+}
+
+.form-input-container>div{
+    display: flex;
+    flex-direction: column;
+}
+
+.crt-acc-span{
+    cursor: pointer;
+}
