@@ -40,7 +40,7 @@ const Login = () => {
                 
             }
             if(json.exists){
-                Navigate('/room')
+                Navigate('/profile/'+ username)
             }else{
                 alert("Incorrect username")
             }

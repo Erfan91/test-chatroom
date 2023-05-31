@@ -4,14 +4,14 @@ import Login from "./Components/Login";
 import Room from "./Components/Room";
 import Profile from "./Components/Profile";
 import "./styles/login.css"
-
+import "./styles/profile.css"
 function App() {
   return (
     <div className="App">
       <Routes>
         <Route path="/" element={<Login/>}/>
         <Route path="/room" element={<Room/>}/>
-        <Route path="/profile" element={<Profile/>}/>
+        <Route path="/profile/:username" element={<Profile/>}/>
       </Routes>
     </div>
   );
