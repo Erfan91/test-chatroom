@@ -145,7 +145,8 @@ const Profile = () => {
                     </div></> :
                   <div className='user-image-container'>
                     <img src={user.image} className='uploaded-image' />
-                    <span className='user-name-span'>{user.name}</span>
+                    <span className='user-name-span'>{user.name[0].toUpperCase() + user.name.slice(1)}</span>
+                    <span className='user-username-span'>@{user.username}</span>
                   </div>
                 }
                 {!user.about ?
@@ -175,8 +176,8 @@ const Profile = () => {
                 {user.username == params.username ? <span style={{ display: 'none' }}></span> :
                   <div className='add-user-div'>
                     <img src={user.image} className='add-user-image' />
-                    <span>{user.name}</span>
-                    <p>@{user.username}</p>
+                    <span className='user-sm-name-span'>{user.name}</span>
+                    <span className='user-username-span'>@{user.username}</span>
                   </div>
                 }
               </>

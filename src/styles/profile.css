@@ -91,6 +91,8 @@ body{
 
 .user-about-span{
     margin: 10px;
+    font-weight: lighter;
+    color: azure;
 }
 
 .submit-btn{
@@ -116,10 +118,42 @@ body{
 
 .add-user-div{
     margin: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(to right, #2b5876, #4e4376);
+    padding: 10px;
+    border-radius: 5px;
+    border: .5px solid white;
 }
 
 .add-user-image{
-    width: 80px;
-    height: 80px;
-    border-radius: 40px;
+    width: 60px;
+    height: 60px;
+    border-radius: 30px;
+    border: .3px solid rgb(107, 255, 255);
+    /* box-shadow: inset 0 0 3px rgb(107, 255, 255); */
+    filter: drop-shadow(0 0 3px rgb(107, 255, 255));
+}
+
+.user-image-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.user-name-span{
+    color: rgb(233, 228, 228);
+    font-size: large;
+}
+
+.user-username-span{
+    color: #a19dc9;
+    font-size: x-small;
+}
+
+.user-sm-name-span{
+    color: rgb(225, 222, 222);
+    font-size: small;
+    font-weight: lighter;
 }
