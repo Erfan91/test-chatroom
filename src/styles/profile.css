@@ -13,53 +13,113 @@ body{
 }
 
 .profile-image{
-    width: 150px;
-    height: 150px;
-    border-radius: 75px;
+    width: 110px;
+    height: 110px;
+    border-radius: 55px;
     background-size: cover;
 }
 
 .profile-info-div{
     display: flex;
     flex-direction: column;
-    height: 60%;
-    width: 40vw;
+    height: 70%;
+    width: 60vw;
     border: .5px solid white;
     background: linear-gradient(to right, #232526, #414345);
     align-items: center;
     justify-content: center;
     border-radius: 40%;
-    box-shadow: inset 0px 0px 86px 6px blue;
+    /* box-shadow: inset 0px 0px 86px 6px blue; */
 }
 
 .user-info-div{
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: center;
+    height: 100%;
 }
 
 .user-about-div{
     display: flex;
     flex-direction: column;
     color: white !important;
+    justify-content: space-evenly;
+    height: 40%;
+    align-items: center;
+}
+
+.user-about-div div{
+    display: flex;
+    flex-direction: column;
 }
 
 .user-about-span{
     color: white;
 }
 
+.about-span{
+    font-size: 13px;
+    margin: 3px;
+}
+
 .upload-first-div{
     /* background-color: blueviolet; */
     text-align: center;
     align-items: center;
-    box-shadow: inset 0px 0Px 30px rgb(130, 18, 18);
-    border: .5px solid black;
 }
 
 .uploaded-image{
-    height: 150px;
-    width: 150px;
-    border-radius: 75px;
+    height: 110px;
+    width: 110px;
+    border-radius: 55px;
     border: .5px solid blue;
+}
+
+.upload-span{
+    position: absolute;
+    top: 40%;
+    left: 49.3%;
+    color: aliceblue;
+    font-size: 30px;
+    font-weight: lighter;
+}
+
+.name-inner-span{
+    color: rgb(244, 109, 51);
+}
+
+.user-about-span{
+    margin: 10px;
+}
+
+.submit-btn{
+    padding: 5px;
+    width: 60px;
+    background-color: cornflowerblue;
+    border-radius: 3px;
+    border: .5px solid white;
+    color: white;
+}
+
+.submit-btn:hover{
+    color: cornflowerblue;
+    background-color: white;
+    border: .5px solid cornflowerblue;
+
+}
+
+.find-users-div{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.add-user-div{
+    margin: 5px;
+}
+
+.add-user-image{
+    width: 80px;
+    height: 80px;
+    border-radius: 40px;
 }

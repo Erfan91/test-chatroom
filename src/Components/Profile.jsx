@@ -2,17 +2,26 @@ import React, { useEffect, useState } from 'react'
 import axios from "axios"
 import img from "../images/téléchargement.jpeg"
 import { useParams, Params } from 'react-router-dom'
+
 const Profile = () => {
   const params = useParams();
   const [user, setUser] = useState([]);
-  const [userAbout, setAbout] = useState('')
-  const [users, setUsers] = useState([])
+  const [userAbout, setAbout] = useState('');
+  const [users, setUsers] = useState([]);
+  const [name, setName] = useState("user's name");
+  const [btnDisplay, setBtnDisplay] = useState('none');
+  const [divDisplay, setDivDisplay] = useState('none')
+  const [submit, setSubmit] = useState(null)
+  //  upName created cause to avoid runtime error for upper case in case when it (name state) is used inline
+  const upName = name
+
   useEffect(() => {
     fetch("http://localhost:3001/user/" + params.username)
       .then(result => result.json())
       .then(json => {
         console.log(json, "JSON")
         setUser([json])
+        setName(json.name)
       })
   }, [])
 
@@ -90,20 +99,23 @@ const Profile = () => {
       .catch(err => {
         console.log(err)
       })
-    // sendImage()
     setDisplay('none')
+    setDivDisplay("flex")
+    setSubmit(true)
   }
-  const sendImage = async e =>{
-     await fetch("http://localhost:3001/user/user_image",{
+  const sendImage = async e => {
+    await fetch("http://localhost:3001/user/user_image", {
       method: "PUT",
-      headers: new Headers({"content-type":"application/json"}),
+      headers: new Headers({ "content-type": "application/json" }),
       body: JSON.stringify({
+        username: params.username,
         url: file
       })
-    }).then(result=>result.json())
-    .then(json=>{
-      console.log(json)
-    })
+    }).then(result => result.json())
+      .then(json => {
+        console.log(json)
+      })
+    getUser()
   }
 
   // useEffect(()=>{
@@ -113,32 +125,41 @@ const Profile = () => {
     <div className='profile-main-div'>
       <div className='profile-info-div'>
         <div className='user-info-div'>
-          <div className='upload-first-div'>
-            <input type="file" accept='/image*' ref={imageUploader} onChange={imageChanger} style={{ display: 'none' }} />
-            <div className='upload-second-div' onClick={() => {
-              imageUploader.current.click()
-              setDisplay('none')
-            }}>
-              <img ref={uploadedImage} className='uploaded-image' />
-              <span className='upload-span' style={{ display: display }}>+</span>
-            </div>
-            <button onClick={uploadImage} className='upload-btn'>Upload</button>
-          </div>
           {user.map(user => {
             return (
               <>
-                <span className='user-about-span'>{user.name}</span>
+                {!user.image ?
+                  <>
+                    <span className='user-about-span'> Welcome <span className='name-inner-span'>{upName[0].toUpperCase() + name.slice(1)}</span>! choose a profile image to get started</span>
+                    <div className='upload-first-div'>
+                      <input type="file" accept='/image*' ref={imageUploader} onChange={imageChanger} style={{ display: 'none' }} />
+                      <div className='upload-second-div' onClick={() => {
+                        imageUploader.current.click()
+                        setDisplay('none')
+                        setBtnDisplay('inline-block')
+                      }}>
+                        <img ref={uploadedImage} className='uploaded-image' />
+                        <span className='upload-span' style={{ display: display }}>+</span>
+                      </div>
+                      {submit ? <button onClick={sendImage} className='upload-btn' style={{ display: btnDisplay }}>Submit image</button> : <button onClick={uploadImage} className='upload-btn' style={{ display: btnDisplay }}>Upload</button>}
+                    </div></> :
+                  <div className='user-image-container'>
+                    <img src={user.image} className='uploaded-image' />
+                    <span className='user-name-span'>{user.name}</span>
+                  </div>
+                }
                 {!user.about ?
-                  <div className='user-about-div'>
-                    <span>Tell us about your self</span>
-                    <textarea cols={6} rows={6} onChange={bioChanger} />
-                    <button onClick={bioSender}>Submit</button>
+                  <div className='user-about-div' style={{ display: divDisplay }}>
+                    <div>
+                      <span className='about-span'>write something about yourself</span>
+                      <textarea cols={5} rows={4} placeholder='I am a Boss😎' onChange={bioChanger} />
+                    </div>
+                    <button onClick={bioSender} className='submit-btn'>Submit</button>
                   </div> : <span className='user-about-span'>{user.about}</span>}
               </>
 
             )
           })
-
           }
         </div>
         <div className="user-avatar-div">
@@ -151,7 +172,13 @@ const Profile = () => {
             console.log(user)
             return (
               <>
-                {user.username == params.username ? <span style={{ display: 'none' }}></span> : <div><span>{user.name}</span> <p>@{user.username}</p></div>}
+                {user.username == params.username ? <span style={{ display: 'none' }}></span> :
+                  <div className='add-user-div'>
+                    <img src={user.image} className='add-user-image' />
+                    <span>{user.name}</span>
+                    <p>@{user.username}</p>
+                  </div>
+                }
               </>
             )
           })
