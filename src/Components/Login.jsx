@@ -35,6 +35,7 @@ const Login = () => {
         }).then(result=>result.json())
         .then(json=>{
             console.log(json)
+            localStorage.setItem("id", json._id)
             if(json.email == false){
                 alert(json.email)
                 

@@ -24,12 +24,13 @@ body{
     flex-direction: column;
     height: 70%;
     width: 60vw;
-    border: .5px solid white;
+    /* border: .5px solid white; */
     background: linear-gradient(to right, #232526, #414345);
     align-items: center;
     justify-content: center;
     border-radius: 40%;
-    /* box-shadow: inset 0px 0px 86px 6px blue; */
+    box-shadow: inset 0px 0px 56px 6px black;
+    /* filter: drop-shadow(0 0 10px rgb(107, 255, 255)); */
 }
 
 .user-info-div{
@@ -134,6 +135,7 @@ body{
     border: .3px solid rgb(107, 255, 255);
     /* box-shadow: inset 0 0 3px rgb(107, 255, 255); */
     filter: drop-shadow(0 0 3px rgb(107, 255, 255));
+    cursor: pointer;
 }
 
 .user-image-container{
@@ -156,4 +158,86 @@ body{
     color: rgb(225, 222, 222);
     font-size: small;
     font-weight: lighter;
+}
+
+.user-avatar-div{
+    /* background-color: #2b5876; */
+    width: 60%;
+    align-items: center;
+    text-align: center;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    border-bottom: 1px solid aqua;
+    border-radius: 5px;
+    padding: 3px;
+}
+
+.message-icon{
+    font-size: 22px;
+    color: aqua;
+    cursor: pointer;
+}
+
+.msg-text{
+    font-size: 12px;
+    font-weight: lighter;
+    color: white;
+}
+
+.user-msg-image{
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    filter: drop-shadow(0 0 3px black);
+
+}
+
+.send-msg-div{
+    display: flex;
+    background: linear-gradient(to right, #74ebd5, #acb6e5); 
+    align-items: center;
+    padding: 3px;
+    border-radius: 3px;
+    border: .5px solid aqua;
+}
+
+.msg-input{
+    margin: 3px;
+    border: .5px solid aqua;
+    background-color: rgb(94, 94, 94);
+    border-radius: 2px;
+    color: #c3cbf1;
+}
+
+.msg-input:focus{
+    outline: none;
+    box-shadow:inset 0 0 5px black;
+}
+
+.send-msg-icon{
+    color: #23ffd7;
+    cursor: pointer;
+}
+
+.current-msg-div{
+    display: flex;
+    width: 17.5vw;
+}
+
+.current-msg-span{
+    width: fit-content;
+    background: linear-gradient(to right, #74ebd5, #acb6e5); 
+    min-width: 25px;
+    border-radius: 12.5px;
+    padding: 1px 5px;
+    max-width: fit-content;
+    margin: 2px;
+    /* border: .5px solid red; */
+    box-shadow: inset 0 0 3px black;
+    font-size: small;
+    color: rgb(70, 71, 71);
+    font-weight: lighter;
+
 }
