@@ -1,0 +1,10 @@
+.room-main-div{
+    position: absolute;
+    left: 70%;
+    display: flex;
+    flex-direction: column;
+    height: 50vh;
+    width: 40vh;
+    border: 1px solid red;
+    background-color: aquamarine;
+}

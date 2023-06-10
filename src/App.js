@@ -4,7 +4,8 @@ import Login from "./Components/Login";
 import Room from "./Components/Room";
 import Profile from "./Components/Profile";
 import "./styles/login.css"
-import "./styles/profile.css"
+import "./styles/profile.css";
+import "./styles/room.css";
 function App() {
   return (
     <div className="App">

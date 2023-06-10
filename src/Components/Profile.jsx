@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
+import { stringify } from "flatted"
 import axios from "axios"
 import img from "../images/téléchargement.jpeg"
 import { useParams, Params } from 'react-router-dom'
 import { BiMessageSquareAdd } from "react-icons/bi"
 // import {IoSend} from "react-icon/io5"
 import { IoSend } from "react-icons/io5";
+import Room from './Room'
 const Profile = () => {
   const params = useParams();
   //(user)  the connected user data is stored in user state.
@@ -20,9 +22,10 @@ const Profile = () => {
   const [submit, setSubmit] = useState(null)
   const [reqName, setReqName] = useState(params.username)
   const [msgDisplay, setMsgDisplay] = useState('none');
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
   const [msgDestId, setMsgDtId] = useState('');
   const [msgList, setMsgList] = useState([]);
+  const [userId, setUserId] = useState("")
   //  upName created cause to avoid runtime error for upper case in case when it (name state) is used inline
   const upName = name
   const id = JSON.stringify(localStorage.getItem('id'))
@@ -35,6 +38,7 @@ const Profile = () => {
         // console.log(json, "JSON")
         setUser([json])
         setName(json.name)
+        setUserId(json._id)
       })
   }, [])
 
@@ -42,8 +46,9 @@ const Profile = () => {
     fetch("http://localhost:3001/user/" + reqName)
       .then(result => result.json())
       .then(json => {
-        console.log(json, "JSON")
+        // console.log(json, "JSON")
         setUser([json])
+
       })
   }
 
@@ -141,7 +146,7 @@ const Profile = () => {
     if (msgDisplay == "flex") {
       setMsgDisplay('none')
     }
-    setMsgDtId(userId)
+    // setMsgDtId(userId)
 
   }
 
@@ -156,27 +161,18 @@ const Profile = () => {
       method: "POST",
       headers: new Headers({ "content-type": "application/json" }),
       body: JSON.stringify({
-        sender: localStorage.getItem('id'),
+        sender: userId,
         receiver: msgDestId,
         content: message
       })
     }).then(result => result.json())
       .then(json => {
-        console.log(json)
+        // console.log(json)
 
       })
     await setMsgList(msgList => [...msgList, message])
   }
 
-  // const getMsg = () =>{
-  //   fetch('http://localhost:3001/msg/getCurrent',{
-  //     method: "POST",
-  //     headers: new Headers({"content-type":"application/json"}),
-  //     body: JSON.stringify({
-  //       se
-  //     })
-  //   })
-  // }
   return (
     <div className='profile-main-div'>
       <div className='profile-info-div'>
@@ -249,7 +245,7 @@ const Profile = () => {
             return (
               <>
                 {user.username == params.username ? <span style={{ display: 'none' }}></span> :
-                  <div className='add-user-div' onClick={() => { setUser([user]); setMsgDtId(user._id); console.log(msgDestId) }}>
+                  <div className='add-user-div' onClick={() => { setUser([user]); setMsgDtId(user._id); }}>
                     <img src={user?.image} className='add-user-image' />
                     <span className='user-sm-name-span'>{user.name}</span>
                     <span className='user-username-span'>@{user.username}</span>
@@ -260,6 +256,7 @@ const Profile = () => {
           })
         }
       </div>
+      <Room/>
     </div>
   )
 }
