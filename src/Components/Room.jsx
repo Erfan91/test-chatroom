@@ -6,17 +6,29 @@ const Room = () => {
   const ids = JSON.parse(id)
 
   useEffect(()=>{
-    fetch(`http://localhost:3001/msg/${ids}`)
+    fetch(`http://localhost:3001/user/msg/${ids}`)
     .then(result=>result.json())
     .then(json=>{
-      console.log(json, "json Message");
-      setMessages([json])
+      console.log(json, "Message Result")
+      setMessages(json.usersMsg)
     })
   },[])
 
   return (
     <div className='room-main-div'>
-        <div></div>
+        {
+          messages.map(user=>{
+            return(
+              <div className='user-msg-div'>
+                <img src={user.image} alt="" className='user-msg-image' />
+                <div className='user-msg-name-container'>
+                <span className='msg-user-span'>{user.name}</span>
+                <span className='msg-username-span'>@{user.username}</span>
+                </div>
+              </div>
+            )
+          })
+        }
     </div>
   )
 }

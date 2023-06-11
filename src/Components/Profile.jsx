@@ -4,7 +4,6 @@ import axios from "axios"
 import img from "../images/téléchargement.jpeg"
 import { useParams, Params } from 'react-router-dom'
 import { BiMessageSquareAdd } from "react-icons/bi"
-// import {IoSend} from "react-icon/io5"
 import { IoSend } from "react-icons/io5";
 import Room from './Room'
 const Profile = () => {
@@ -26,7 +25,6 @@ const Profile = () => {
   const [msgDestId, setMsgDtId] = useState('');
   const [msgList, setMsgList] = useState([]);
   const [userId, setUserId] = useState("")
-  //  upName created cause to avoid runtime error for upper case in case when it (name state) is used inline
   const upName = name
   const id = JSON.stringify(localStorage.getItem('id'))
   const ids = JSON.parse(id)
@@ -102,7 +100,7 @@ const Profile = () => {
     }
   }
 
-  //  this function send the image file to back and receives the url/path of the image from multer, then it is ready to be sent and registred as profile image. 
+  //  this function sends the image file to back and receives the url/path of the image back from multer, then it is ready to be sent and registred as a profile image. 
   const uploadImage = e => {
     e.preventDefault()
     const formData = new FormData()
@@ -118,7 +116,7 @@ const Profile = () => {
 
       })
       .catch(err => {
-        // console.log(err)
+        console.log(err)
       })
     setDisplay('none')
     setDivDisplay("flex")
@@ -146,7 +144,6 @@ const Profile = () => {
     if (msgDisplay == "flex") {
       setMsgDisplay('none')
     }
-    // setMsgDtId(userId)
 
   }
 
@@ -241,7 +238,6 @@ const Profile = () => {
       <div className="find-users-div">
         {
           users.map(user => {
-            // console.log(user)
             return (
               <>
                 {user.username == params.username ? <span style={{ display: 'none' }}></span> :
