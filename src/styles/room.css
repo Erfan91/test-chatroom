@@ -98,6 +98,9 @@
 .message-content{
     height: 76%;
     background-color: #b6fbff;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
 }
 
 .content-send-msg-div{
@@ -112,4 +115,47 @@
     height: 50%;
     border-radius: 10px;
     border: none;
+}
+
+.current-user-msg{
+    width: 100%;
+    /* background-color: azure; */
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.current-user-text-span{
+    background-color: aqua; 
+    min-width: 30px;  
+    text-align: center;
+    padding:1px 3px;
+    border-radius: 13px;
+    border: .5px solid black;
+    margin: 2px 0;
+    font-size: small;
+}
+
+.msg-sender-sm-image{
+    width: 17px;
+    height: 17px;
+    border-radius: 9px;
+}
+
+.user2-user-msg{
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.user2-user-text-span{
+    background-color:dodgerblue; 
+    min-width: 30px;  
+    text-align: center;
+    padding:1px 3px;
+    border-radius: 13px;
+    border: .5px solid black;
+    margin: 2px 0;
+    font-size: small;
 }

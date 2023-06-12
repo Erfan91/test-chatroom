@@ -22,14 +22,14 @@ const Room = () => {
       })
   }, [])
 
-  useEffect(() => {
-    fetch(`http://localhost:3001/msg/${ids}/${userId}`)
+  useEffect( () => {
+     fetch(`http://localhost:3001/msg/${ids}/${userId}`)
       .then(result => result.json())
       .then(json => {
-        setMessages([json]);
+        setMessages(json);
       })
 
-  }, [])
+  }, [userId])
 
 
 
@@ -39,10 +39,11 @@ const Room = () => {
         messagesList.map((user, index) => {
           return (
             <>
-              <div className='user-msg-div' style={{ display: display }} onClick={() => {
+              <div className='user-msg-div' style={{ display: display }} onClick={async() => {
                 setDisplay("none")
                 setDisplayA("flex")
-                setUserId(user._id)
+                await setUserId(user._id)
+                console.log(user._id, "USER ID")
                 setInputIndex(inputIndex => inputIndex === index ? null : index)
               }}>
                 <div className='user-msg-div-firstChild'>
@@ -58,7 +59,10 @@ const Room = () => {
               </div>
               {inputIndex === index && <div className="user-msg-content" style={{ display: displayA }}>
                 <div className='msg-content-header'>
-                  <span className='back-icon-span'><IoIosArrowBack className='back-icon' /></span>
+                  <span className='back-icon-span'><IoIosArrowBack className='back-icon' onClick={()=>{
+                    setDisplay('flex');
+                    setDisplayA("none")
+                  }}/></span>
                   <img src={user.image} alt="" className='user-msg-sm-image' />
                   <div className='user-msg-name-container'>
                     <span className='user-msg-sm-name'>{user.name}</span>
@@ -66,7 +70,22 @@ const Room = () => {
                   </div>
                 </div>
                 <div className='message-content'>
-
+                    {messages.map(msg=>{
+                      return(
+                        <>
+                        {msg.sender._id == ids ?<div className='current-user-msg'>
+                          <span className='current-user-text-span'>{msg.content}</span>
+                          <img src={msg.sender.image} alt="" className='msg-sender-sm-image'/>
+                        </div>
+                        :
+                        <div className='user2-user-msg'>
+                          <img src={msg.sender.image} alt="" className='msg-sender-sm-image'/>
+                          <span className='user2-user-text-span'>{msg.content}</span>
+                        </div>
+                        }
+                        </>
+                      )
+                    })}
                 </div>
                 <div className='content-send-msg-div'>
                     <input type="text" className='msg-text-input'/>
