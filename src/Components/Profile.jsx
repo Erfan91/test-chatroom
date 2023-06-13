@@ -6,7 +6,7 @@ import { useParams, Params } from 'react-router-dom'
 import { BiMessageSquareAdd } from "react-icons/bi"
 import { IoSend } from "react-icons/io5";
 import Room from './Room'
-const Profile = () => {
+const Profile = (props) => {
   const params = useParams();
   //(user)  the connected user data is stored in user state.
   const [user, setUser] = useState([]);
@@ -168,6 +168,11 @@ const Profile = () => {
 
       })
     await setMsgList(msgList => [...msgList, message])
+    callPropFunc()
+  }
+
+  const callPropFunc = func =>{
+    func()
   }
 
   return (
@@ -252,7 +257,7 @@ const Profile = () => {
           })
         }
       </div>
-      <Room/>
+      <Room msgFunc={callPropFunc}/>
     </div>
   )
 }

@@ -3,7 +3,7 @@ import { TfiMore } from "react-icons/tfi";
 import { IoIosArrowBack, IoIosMic } from "react-icons/io";
 import { BsImage } from "react-icons/bs"
 import { IoSend } from "react-icons/io5";
-const Room = () => {
+const Room = (props) => {
   const [messagesList, setMessagesList] = useState([]);
   const [messages, setMessages] = useState([])
   const [display, setDisplay] = useState("flex");
@@ -11,7 +11,8 @@ const Room = () => {
   const [userId, setUserId] = useState("")
   const id = JSON.stringify(localStorage.getItem('id'));
   const ids = JSON.parse(id)
-  const [inputIndex, setInputIndex] = useState(null)
+  const [inputIndex, setInputIndex] = useState(null);
+  const [inputTxt, setInputTxt] = useState('');
 
   useEffect(() => {
     fetch(`http://localhost:3001/user/msg/${ids}`)
@@ -20,6 +21,7 @@ const Room = () => {
         console.log(json, "Message Result")
         setMessagesList(json.usersMsg)
       })
+      props.msgFunc(refresher)
   }, [])
 
   useEffect( () => {
@@ -32,6 +34,35 @@ const Room = () => {
   }, [userId])
 
 
+  const refresher = () =>{
+    fetch(`http://localhost:3001/msg/${ids}/${userId}`)
+      .then(result => result.json())
+      .then(json => {
+        setMessages(json);
+      })
+  }
+  const textChanger = e =>{
+    e.preventDefault()
+    setInputTxt(e.target.value)
+  }
+
+  const messageSender = async e => {
+    e.preventDefault()
+    await fetch('http://localhost:3001/msg', {
+      method: "POST",
+      headers: new Headers({ "content-type": "application/json" }),
+      body: JSON.stringify({
+        sender: ids,
+        receiver: userId,
+        content: inputTxt
+      })
+    }).then(result => result.json())
+      .then(json => {
+        // console.log(json)
+
+      })
+    refresher()
+  }
 
   return (
     <div className='room-main-div'>
@@ -88,10 +119,10 @@ const Room = () => {
                     })}
                 </div>
                 <div className='content-send-msg-div'>
-                    <input type="text" className='msg-text-input'/>
+                    <input type="text" className='msg-text-input' onChange={textChanger}/>
                     <IoIosMic className='mic-icon'/>
                     <BsImage className='image-icon'/>
-                    <IoSend className='send-msg-icon'/>
+                    <IoSend className='send-msg-icon' onClick={messageSender}/>
                 </div>
               </div>}
             </>

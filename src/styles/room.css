@@ -97,10 +97,15 @@
 
 .message-content{
     height: 76%;
+    overflow-y: auto;
     background-color: #b6fbff;
     display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
+    flex-direction: column-reverse;
+    justify-content: flex-start;
+}
+
+::-webkit-scrollbar-thumb{
+    background-color: black;
 }
 
 .content-send-msg-div{
