@@ -3,7 +3,7 @@ import { stringify } from "flatted"
 import axios from "axios"
 import img from "../images/téléchargement.jpeg"
 import { useParams, Params } from 'react-router-dom'
-import { BiMessageSquareAdd } from "react-icons/bi"
+import { BiMessageSquareAdd, BiMessageSquareDots } from "react-icons/bi"
 import { IoSend } from "react-icons/io5";
 import Room from './Room'
 const Profile = (props) => {
@@ -86,6 +86,7 @@ const Profile = (props) => {
   const [myImage, setImage] = useState('');
   const [file, setFile] = useState('');
   const [display, setDisplay] = useState('block')
+  const [propsMsg, setPropsMsg] = useState([])
   const imageChanger = e => {
     const [file] = e.target.files;
     if (file) {
@@ -165,15 +166,22 @@ const Profile = (props) => {
     }).then(result => result.json())
       .then(json => {
         // console.log(json)
-
+         getId()
+        
       })
     await setMsgList(msgList => [...msgList, message])
-    callPropFunc()
+ 
   }
 
-  const callPropFunc = func =>{
-    func()
+  const getId = ( messages) =>{
+    fetch(`http://localhost:3001/user/msg/${ids}`)
+    .then(result=>result.json())
+    .then(json=>{
+      setPropsMsg(json.usersMsg)
+    })
   }
+
+
 
   return (
     <div className='profile-main-div'>
@@ -223,9 +231,11 @@ const Profile = (props) => {
                     </div>
                     <div className='current-msg-div' style={{display: msgDisplay}}>
                       {
-                        msgList.map(msg => {
+                        msgList.map((msg,index) => {
                           return (
-                            <span className='current-msg-span'>{msg}</span>
+                            <>
+                            <span className='current-msg-span'>{msg}</span> 
+                            </>
                           )
                         })
                       }
@@ -257,7 +267,10 @@ const Profile = (props) => {
           })
         }
       </div>
-      <Room msgFunc={callPropFunc}/>
+      <Room propsMsg={propsMsg}/>
+      <div className='msgBox-main-div'>
+        <span className='main-msg-icon'><BiMessageSquareDots/></span>
+      </div>
     </div>
   )
 }

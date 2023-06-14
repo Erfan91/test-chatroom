@@ -21,7 +21,6 @@ const Room = (props) => {
         console.log(json, "Message Result")
         setMessagesList(json.usersMsg)
       })
-      props.msgFunc(refresher)
   }, [])
 
   useEffect( () => {
@@ -33,6 +32,9 @@ const Room = (props) => {
 
   }, [userId])
 
+  useEffect(()=>{
+    setMessagesList(props.propsMsg)
+  },[props.propsMsg])
 
   const refresher = () =>{
     fetch(`http://localhost:3001/msg/${ids}/${userId}`)

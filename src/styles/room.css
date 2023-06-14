@@ -1,7 +1,8 @@
 .room-main-div{
     position: absolute;
-    left: 70%;
-    display: flex;
+    left: 79.5%;
+    /* display: flex; */
+    display: none;
     flex-direction: column;
     height: 50vh;
     width: 40vh;
