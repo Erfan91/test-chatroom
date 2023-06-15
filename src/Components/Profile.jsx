@@ -24,7 +24,8 @@ const Profile = (props) => {
   const [message, setMessage] = useState("");
   const [msgDestId, setMsgDtId] = useState('');
   const [msgList, setMsgList] = useState([]);
-  const [userId, setUserId] = useState("")
+  const [userId, setUserId] = useState("");
+  const [propsDisplay, setPropsDisplay] = useState("none");
   const upName = name
   const id = JSON.stringify(localStorage.getItem('id'))
   const ids = JSON.parse(id)
@@ -267,8 +268,8 @@ const Profile = (props) => {
           })
         }
       </div>
-      <Room propsMsg={propsMsg}/>
-      <div className='msgBox-main-div'>
+      <Room propsMsg={propsMsg} display={propsDisplay}/>
+      <div className='msgBox-main-div' onClick={()=>propsDisplay == "none"? setPropsDisplay('flex'): setPropsDisplay("none")}>
         <span className='main-msg-icon'><BiMessageSquareDots/></span>
       </div>
     </div>

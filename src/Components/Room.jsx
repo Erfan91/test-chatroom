@@ -3,6 +3,7 @@ import { TfiMore } from "react-icons/tfi";
 import { IoIosArrowBack, IoIosMic } from "react-icons/io";
 import { BsImage } from "react-icons/bs"
 import { IoSend } from "react-icons/io5";
+import moment from "moment";
 const Room = (props) => {
   const [messagesList, setMessagesList] = useState([]);
   const [messages, setMessages] = useState([])
@@ -23,8 +24,8 @@ const Room = (props) => {
       })
   }, [])
 
-  useEffect( () => {
-     fetch(`http://localhost:3001/msg/${ids}/${userId}`)
+  useEffect(() => {
+    fetch(`http://localhost:3001/msg/${ids}/${userId}`)
       .then(result => result.json())
       .then(json => {
         setMessages(json);
@@ -32,18 +33,18 @@ const Room = (props) => {
 
   }, [userId])
 
-  useEffect(()=>{
+  useEffect(() => {
     setMessagesList(props.propsMsg)
-  },[props.propsMsg])
+  }, [props.propsMsg])
 
-  const refresher = () =>{
+  const refresher = () => {
     fetch(`http://localhost:3001/msg/${ids}/${userId}`)
       .then(result => result.json())
       .then(json => {
         setMessages(json);
       })
   }
-  const textChanger = e =>{
+  const textChanger = e => {
     e.preventDefault()
     setInputTxt(e.target.value)
   }
@@ -67,12 +68,12 @@ const Room = (props) => {
   }
 
   return (
-    <div className='room-main-div'>
+    <div className='room-main-div' style={{ display: props.display }}>
       {
         messagesList.map((user, index) => {
           return (
             <>
-              <div className='user-msg-div' style={{ display: display }} onClick={async() => {
+              <div className='user-msg-div' style={{ display: display }} onClick={async () => {
                 setDisplay("none")
                 setDisplayA("flex")
                 await setUserId(user._id)
@@ -92,10 +93,10 @@ const Room = (props) => {
               </div>
               {inputIndex === index && <div className="user-msg-content" style={{ display: displayA }}>
                 <div className='msg-content-header'>
-                  <span className='back-icon-span'><IoIosArrowBack className='back-icon' onClick={()=>{
+                  <span className='back-icon-span'><IoIosArrowBack className='back-icon' onClick={() => {
                     setDisplay('flex');
                     setDisplayA("none")
-                  }}/></span>
+                  }} /></span>
                   <img src={user.image} alt="" className='user-msg-sm-image' />
                   <div className='user-msg-name-container'>
                     <span className='user-msg-sm-name'>{user.name}</span>
@@ -103,28 +104,34 @@ const Room = (props) => {
                   </div>
                 </div>
                 <div className='message-content'>
-                    {messages.map(msg=>{
-                      return(
-                        <>
-                        {msg.sender._id == ids ?<div className='current-user-msg'>
-                          <span className='current-user-text-span'>{msg.content}</span>
-                          <img src={msg.sender.image} alt="" className='msg-sender-sm-image'/>
+                  {messages.map(msg => {
+                    return (
+                      <>
+                        {msg.sender._id == ids ? <div className='current-user-msg'>
+                          <div className='msg-time-div'>
+                            <span className='msg-time-span'>{moment(msg.createdAt).format("h:mm a")}</span>
+                            <span className='current-user-text-span'>{msg.content}</span>
+                          </div>
+                          <img src={msg.sender.image} alt="" className='msg-sender-sm-image' />
                         </div>
-                        :
-                        <div className='user2-user-msg'>
-                          <img src={msg.sender.image} alt="" className='msg-sender-sm-image'/>
-                          <span className='user2-user-text-span'>{msg.content}</span>
-                        </div>
+                          :
+                          <div className='user2-user-msg'>
+                            <img src={msg.sender.image} alt="" className='msg-sender-sm-image' />
+                            <div className='msg-time-div'>
+                              <span className='user2-user-text-span'>{msg.content}</span>
+                              <span className='msg-time-span'>{moment(msg.createdAt).format("h:mm a")}</span>
+                            </div>
+                          </div>
                         }
-                        </>
-                      )
-                    })}
+                      </>
+                    )
+                  })}
                 </div>
                 <div className='content-send-msg-div'>
-                    <input type="text" className='msg-text-input' onChange={textChanger}/>
-                    <IoIosMic className='mic-icon'/>
-                    <BsImage className='image-icon'/>
-                    <IoSend className='send-msg-icon' onClick={messageSender}/>
+                  <input type="text" className='msg-text-input' onChange={textChanger} />
+                  <IoIosMic className='mic-icon' />
+                  <BsImage className='image-icon' />
+                  <IoSend className='send-msg-icon' onClick={messageSender} />
                 </div>
               </div>}
             </>
