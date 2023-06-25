@@ -3,8 +3,8 @@
     left: 79.5%;
     /* display: flex; */
     display: none;
-    flex-direction: column;
-    height: 50vh;
+    flex-direction: column-reverse;
+    height: 50vh !important;
     width: 40vh;
     border: .5px solid #23ffd7;
     /* background-color: rgb(103, 103, 103); */
@@ -12,6 +12,7 @@
     padding: 3px;
     border-radius: 3px;
     /* box-shadow: inset 0 0 3px 3px #b6fbff; */
+    overflow-y: auto;
 }
 
 .user-msg-div{
@@ -20,11 +21,11 @@
     background: linear-gradient(to right, #83a4d4, #b6fbff);
     border: .5px solid rgb(152, 203, 255);
     padding: 3px;
-    height: 17%;
     align-items: center;
     border-radius: 2px;
     margin: .5px;
     cursor: pointer;
+    height: 70px !important;
 }
 
 .user-msg-div-child1{

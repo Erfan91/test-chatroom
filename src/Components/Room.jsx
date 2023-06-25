@@ -14,13 +14,18 @@ const Room = (props) => {
   const ids = JSON.parse(id)
   const [inputIndex, setInputIndex] = useState(null);
   const [inputTxt, setInputTxt] = useState('');
+  const [messageId, setMessageId] = useState('');
 
   useEffect(() => {
     fetch(`http://localhost:3001/user/msg/${ids}`)
       .then(result => result.json())
       .then(json => {
         console.log(json, "Message Result")
-        setMessagesList(json.usersMsg)
+        if(json.usersMsg[0].sender._id == ids){
+          setMessagesList([json.usersMsg[0].receiver])
+        }else if(json.usersMsg[0].receiver == ids){
+          setMessagesList([json.usersMsg[0].sender])
+        }
       })
   }, [])
 
@@ -67,6 +72,20 @@ const Room = (props) => {
     refresher()
   }
 
+  const changeSeen = (id) =>{
+    fetch('http://localhost:3001/msg/seen',{
+      method: "PUT",
+      headers: new Headers({"content-type":"application/json"}),
+      body: JSON.stringify({
+        id: id,
+        ids: ids
+      })
+    }).then(result=>result.json())
+    .then(json=>{
+      console.log(json, "seen updated")
+    })
+  }
+
   return (
     <div className='room-main-div' style={{ display: props.display }}>
       {
@@ -79,6 +98,7 @@ const Room = (props) => {
                 await setUserId(user._id)
                 console.log(user._id, "USER ID")
                 setInputIndex(inputIndex => inputIndex === index ? null : index)
+                changeSeen(user._id)
               }}>
                 <div className='user-msg-div-firstChild'>
                   <img src={user.image} alt="" className='user-msg-image' />
