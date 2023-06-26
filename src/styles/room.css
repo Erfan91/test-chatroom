@@ -28,6 +28,19 @@
     height: 70px !important;
 }
 
+.user-msg-div-seen{
+    display: flex;
+    justify-content: space-between;
+    background: linear-gradient(to right, #83a4d4, #adc2c2);
+    border: .5px solid rgb(152, 203, 255);
+    padding: 3px;
+    align-items: center;
+    border-radius: 2px;
+    margin: .5px;
+    cursor: pointer;
+    height: 70px !important;
+}
+
 .user-msg-div-child1{
     display: flex;
     justify-content: space-between;

@@ -21,11 +21,12 @@ const Room = (props) => {
       .then(result => result.json())
       .then(json => {
         console.log(json, "Message Result")
-        if(json.usersMsg[0].sender._id == ids){
-          setMessagesList([json.usersMsg[0].receiver])
-        }else if(json.usersMsg[0].receiver == ids){
-          setMessagesList([json.usersMsg[0].sender])
-        }
+        setMessagesList(json.usersMsg)
+        // if(json.usersMsg[0].sender._id == ids){
+        //   setMessagesList([json.usersMsg[0].receiver])
+        // }else if(json.usersMsg[0].receiver._id == ids){
+        //   setMessagesList([json.usersMsg[0].sender])
+        // }
       })
   }, [])
 
@@ -73,7 +74,7 @@ const Room = (props) => {
   }
 
   const changeSeen = (id) =>{
-    fetch('http://localhost:3001/msg/seen',{
+    fetch('http://localhost:3001/userMsg',{
       method: "PUT",
       headers: new Headers({"content-type":"application/json"}),
       body: JSON.stringify({
@@ -92,25 +93,86 @@ const Room = (props) => {
         messagesList.map((user, index) => {
           return (
             <>
-              <div className='user-msg-div' style={{ display: display }} onClick={async () => {
+              {user.sender._id == ids && user.seen?
+                <div className='user-msg-div-seen' style={{ display: display }} onClick={async () => {
                 setDisplay("none")
                 setDisplayA("flex")
-                await setUserId(user._id)
-                console.log(user._id, "USER ID")
+                await setUserId(user.receiver._id)
+                console.log(user.receiver._id, "USER ID")
                 setInputIndex(inputIndex => inputIndex === index ? null : index)
                 changeSeen(user._id)
               }}>
                 <div className='user-msg-div-firstChild'>
-                  <img src={user.image} alt="" className='user-msg-image' />
+                  <img src={user.receiver.image} alt="" className='user-msg-image' />
                   <div className='user-msg-name-container'>
-                    <span className='msg-user-span'>{user.name}</span>
-                    <span className='msg-username-span'>@{user.username}</span>
+                    <span className='msg-user-span'>{user.receiver.name}</span>
+                    <span className='msg-username-span'>@{user.receiver.username}</span>
                   </div>
                 </div>
                 <div className='user-msg-div-secondChild'>
                   <span><TfiMore className='more-icon' /></span>
                 </div>
               </div>
+              :user.sender.id == ids && !user.seen?
+              <div className='user-msg-div' style={{ display: display }} onClick={async () => {
+                setDisplay("none")
+                setDisplayA("flex")
+                await setUserId(user.receiver._id)
+                console.log(user.receiver._id, "USER ID")
+                setInputIndex(inputIndex => inputIndex === index ? null : index)
+                changeSeen(user._id)
+              }}>
+                <div className='user-msg-div-firstChild'>
+                  <img src={user.receiver.image} alt="" className='user-msg-image' />
+                  <div className='user-msg-name-container'>
+                    <span className='msg-user-span'>{user.receiver.name}</span>
+                    <span className='msg-username-span'>@{user.receiver.username}</span>
+                  </div>
+                </div>
+                <div className='user-msg-div-secondChild'>
+                  <span><TfiMore className='more-icon' /></span>
+                </div>
+              </div>
+              :user.receiver._id == ids && user.seen?
+              <div className='user-msg-div-seen' style={{ display: display }} onClick={async () => {
+                setDisplay("none")
+                setDisplayA("flex")
+                await setUserId(user.sender._id)
+                console.log(user.sender._id, "USER ID")
+                setInputIndex(inputIndex => inputIndex === index ? null : index)
+                changeSeen(user._id)
+              }}>
+                <div className='user-msg-div-firstChild'>
+                  <img src={user.sender.image} alt="" className='user-msg-image' />
+                  <div className='user-msg-name-container'>
+                    <span className='msg-user-span'>{user.sender.name}</span>
+                    <span className='msg-username-span'>@{user.sender.username}</span>
+                  </div>
+                </div>
+                <div className='user-msg-div-secondChild'>
+                  <span><TfiMore className='more-icon' /></span>
+                </div>
+              </div>: user.receiver._id == ids && !user.seen?
+              <div className='user-msg-div' style={{ display: display }} onClick={async () => {
+                setDisplay("none")
+                setDisplayA("flex")
+                await setUserId(user.receiver._id)
+                console.log(user.receiver._id, "USER ID")
+                setInputIndex(inputIndex => inputIndex === index ? null : index)
+                changeSeen(user._id)
+              }}>
+                <div className='user-msg-div-firstChild'>
+                  <img src={user.receiver.image} alt="" className='user-msg-image' />
+                  <div className='user-msg-name-container'>
+                    <span className='msg-user-span'>{user.receiver.name}</span>
+                    <span className='msg-username-span'>@{user.receiver.username}</span>
+                  </div>
+                </div>
+                <div className='user-msg-div-secondChild'>
+                  <span><TfiMore className='more-icon' /></span>
+                </div>
+              </div>:console.log("unknown error")
+              }
               {inputIndex === index && <div className="user-msg-content" style={{ display: displayA }}>
                 <div className='msg-content-header'>
                   <span className='back-icon-span'><IoIosArrowBack className='back-icon' onClick={() => {
